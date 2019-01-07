@@ -2,11 +2,9 @@ import {createElement, Component, PropTypes} from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
 import Touchable from 'rax-touchable';
-
 import Day from './Day';
-
 import moment from './moment';
-import styles from './styles';
+import './index.css';
 
 const DEVICE_WIDTH = 750;
 const VIEW_INDEX = 2;
@@ -149,7 +147,8 @@ export default class Calendar extends Component {
         weekRows.push(
           <View
             key={weekRows.length}
-            style={[styles.weekRow, this.props.customStyle.weekRow]}
+            className="weekRow"
+            style={this.props.customStyle.weekRow}
           >
             {days}
           </View>);
@@ -163,7 +162,7 @@ export default class Calendar extends Component {
 
 
     return (
-      <View key={argMoment.month()} style={styles.monthContainer}>
+      <View key={argMoment.month()} className="monthContainer">
         {weekRows}
       </View>
     );
@@ -173,12 +172,16 @@ export default class Calendar extends Component {
     const headings = [];
     for (let i = 0; i < 7; i++) {
       const j = (i + this.props.weekStart) % 7;
+      let headClassName = j === 0 || j === 6 ?
+            'weekendHeading' :
+            'dayHeading'
       headings.push(
         <Text
           key={i}
+          className={headClassName}
           style={j === 0 || j === 6 ?
-            [styles.weekendHeading, this.props.customStyle.weekendHeading] :
-            [styles.dayHeading, this.props.customStyle.dayHeading]}
+            this.props.customStyle.weekendHeading :
+            this.props.customStyle.dayHeading}
         >
           {this.props.dayHeadings[j]}
         </Text>
@@ -186,7 +189,7 @@ export default class Calendar extends Component {
     }
 
     return (
-      <View style={[styles.calendarHeading, this.props.customStyle.calendarHeading]}>
+      <View className="calendarHeading" style={this.props.customStyle.calendarHeading}>
         {headings}
       </View>
     );
@@ -195,31 +198,33 @@ export default class Calendar extends Component {
   renderTopBar() {
     return this.props.showControls
       ?
-      <View style={[styles.calendarControls, this.props.customStyle.calendarControls]}>
+      <View className="calendarControls" style={this.props.customStyle.calendarControls}>
         <Touchable
-          style={[styles.controlButton, this.props.customStyle.controlButton]}
+          className="controlButton"
+          style={this.props.customStyle.controlButton}
           onPress={this.onPrev}
         >
-          <Text style={[styles.controlButtonText, this.props.customStyle.controlButtonText]}>
+          <Text className="controlButtonText" style={this.props.customStyle.controlButtonText}>
             {this.props.prevButtonText}
           </Text>
         </Touchable>
-        <Text style={[styles.title, this.props.customStyle.title]}>
+        <Text className="title" style={this.props.customStyle.title}>
           {this.state.currentMonthMoment.format(this.props.titleFormat)}
         </Text>
         <Touchable
-          style={[styles.controlButton, this.props.customStyle.controlButton]}
+          className="controlButton"
+          style={this.props.customStyle.controlButton}
           onPress={this.onNext}
         >
-          <Text style={[styles.controlButtonText, this.props.customStyle.controlButtonText]}>
+          <Text className="controlButtonText" style={this.props.customStyle.controlButtonText}>
             {this.props.nextButtonText}
           </Text>
         </Touchable>
       </View>
 
       :
-      <View style={[styles.calendarControls, this.props.customStyle.calendarControls]}>
-        <Text style={[styles.title, this.props.customStyle.title]}>
+      <View className="calendarControls" style={this.props.customStyle.calendarControls}>
+        <Text className="title" style={this.props.customStyle.title}>
           {this.state.currentMonthMoment.format(this.props.titleFormat)}
         </Text>
       </View>
@@ -231,7 +236,7 @@ export default class Calendar extends Component {
     const eventDatesMap = this.prepareEventDates(this.props.eventDates);
     let calendarDatesNode = calendarDates.map((date) => this.renderMonthView(moment(date), eventDatesMap));
     return (
-      <View style={[styles.calendarContainer, this.props.customStyle.calendarContainer]}>
+      <View className="calendarContainer" style={this.props.customStyle.calendarContainer}>
         {this.renderTopBar()}
         {this.props.showDayHeadings && this.renderHeading(this.props.titleFormat)}
         <View style={{height: calendarDatesNode[0].props.children.length * 92}}>

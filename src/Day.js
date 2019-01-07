@@ -2,8 +2,7 @@ import {createElement, Component, PropTypes} from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
 import Touchable from 'rax-touchable';
-
-import styles from './styles';
+import './index.css';
 
 export default class Day extends Component {
   static defaultProps = {
@@ -25,29 +24,42 @@ export default class Day extends Component {
 
   dayCircleStyle = (isWeekend, isSelected, isToday) => {
     const { customStyle } = this.props;
-    const dayCircleStyle = [styles.dayCircleFiller, customStyle.dayCircleFiller && customStyle.dayCircleFiller];
-
+    const dayCircleStyle = [customStyle.dayCircleFiller && customStyle.dayCircleFiller];
+    let dayCircleClassName = 'dayCircleFiller';
     if (isSelected && !isToday) {
-      dayCircleStyle.push(styles.selectedDayCircle, customStyle.selectedDayCircle && customStyle.selectedDayCircle);
+      dayCircleClassName += ' selectedDayCircle';
+      dayCircleStyle.push(customStyle.selectedDayCircle && customStyle.selectedDayCircle);
     } else if (isSelected && isToday) {
-      dayCircleStyle.push(styles.currentDayCircle, customStyle.currentDayCircle && customStyle.currentDayCircle);
+      dayCircleClassName += ' currentDayCircle';
+      dayCircleStyle.push(customStyle.currentDayCircle && customStyle.currentDayCircle);
     }
-    return dayCircleStyle;
+    return {
+      dayCircleStyle,
+      dayCircleClassName
+    };
   }
 
   dayTextStyle = (isWeekend, isSelected, isToday, isDisabled) => {
     const { customStyle } = this.props;
-    const dayTextStyle = [styles.day, customStyle.day];
+    const dayTextStyle = [customStyle.day];
+    let dayTextClassName = 'day';
     if (isDisabled) {
-      dayTextStyle.push(styles.disabledDayText, customStyle.disabledDayText && customStyle.disabledDayText);
+      dayTextClassName += ' disabledDayText';
+      dayTextStyle.push(customStyle.disabledDayText && customStyle.disabledDayText);
     } else if (isToday && !isSelected) {
-      dayTextStyle.push(styles.currentDayText, customStyle.currentDayText && customStyle.currentDayText);
+      dayTextClassName += ' currentDayText';
+      dayTextStyle.push(customStyle.currentDayText && customStyle.currentDayText);
     } else if (isToday || isSelected) {
-      dayTextStyle.push(styles.selectedDayText, customStyle.selectedDayText && customStyle.selectedDayText);
+      dayTextClassName += ' selectedDayText';
+      dayTextStyle.push(customStyle.selectedDayText && customStyle.selectedDayText);
     } else if (isWeekend) {
-      dayTextStyle.push(styles.weekendDayText, customStyle.weekendDayText && customStyle.weekendDayText);
+      dayTextClassName += ' weekendDayText';
+      dayTextStyle.push(customStyle.weekendDayText && customStyle.weekendDayText);
     }
-    return dayTextStyle;
+    return {
+      dayTextStyle,
+      dayTextClassName
+    };
   }
 
   render() {
@@ -62,25 +74,25 @@ export default class Day extends Component {
       usingEvents,
     } = this.props;
 
+    const {dayCircleStyle, dayCircleClassName} = this.dayCircleStyle(isWeekend, isSelected, isToday);
+    const {dayTextStyle, dayTextClassName} = this.dayTextStyle(isWeekend, isSelected, isToday, isDisabled);
+    const usingEventsClassName = usingEvents && hasEvent ? 'eventIndicatorFiller eventIndicator' : 'eventIndicatorFiller';
     return filler
       ?
       <Touchable>
-        <View style={[styles.dayButtonFiller, customStyle.dayButtonFiller]}>
-          <Text style={[styles.day, customStyle.day]} />
+        <View className="dayButtonFiller" style={customStyle.dayButtonFiller}>
+          <Text className="day" style={customStyle.day} />
         </View>
       </Touchable>
-
       :
       <Touchable onPress={isDisabled ? null : this.props.onPress}>
-        <View style={[styles.dayButton, customStyle.dayButton]}>
-          <View style={this.dayCircleStyle(isWeekend, isSelected, isToday)}>
-            <Text style={this.dayTextStyle(isWeekend, isSelected, isToday, isDisabled)}>{caption}</Text>
+        <View className="dayButton" style={customStyle.dayButton}>
+          <View className={dayCircleClassName} style={dayCircleStyle}>
+            <Text className={dayTextClassName} style={dayTextStyle}>{caption}</Text>
           </View>
           {usingEvents &&
-            <View style={[
-              styles.eventIndicatorFiller,
+            <View className={usingEventsClassName} style={[
               customStyle.eventIndicatorFiller,
-              hasEvent && styles.eventIndicator,
               hasEvent && customStyle.eventIndicator]}
             />
           }
