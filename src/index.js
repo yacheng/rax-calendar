@@ -173,8 +173,8 @@ export default class Calendar extends Component {
     for (let i = 0; i < 7; i++) {
       const j = (i + this.props.weekStart) % 7;
       let headClassName = j === 0 || j === 6 ?
-            'weekendHeading' :
-            'dayHeading'
+        'weekendHeading' :
+        'dayHeading';
       headings.push(
         <Text
           key={i}
