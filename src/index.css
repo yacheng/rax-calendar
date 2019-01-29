@@ -1,0 +1,103 @@
+.calendarContainer {
+  background-color: #fff;
+}
+.monthContainer {
+  width: 750;
+}
+.monthHeading {
+  padding: 10;
+  align-items: center;
+  border-bottom: 1rem solid #f7f7f7;
+  font-size: 30;
+}
+.calendarControls {
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 10;
+}
+.controlButton {
+}
+.controlButtonText {
+  margin: 20;
+  font-size: 30;
+}
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 38;
+  margin: 10;
+}
+.calendarHeading {
+  flex-direction: row;
+  border-top-width: 1;
+  border-bottom-width: 1;
+}
+.dayHeading {
+  flex: 1;
+  font-size: 30;
+  text-align: center;
+  margin-vertical: 10;
+}
+.weekendHeading {
+  flex: 1;
+  font-size: 30;
+  text-align: center;
+  margin-vertical: 10;
+  color: #ccc;
+}
+.weekRow {
+  flex-direction: row;
+}
+.dayButton {
+  align-items: center;
+  padding: 10;
+  width: 107.14;
+  border-top-width: 1;
+  border-top-color: #e9e9e9;
+}
+.dayButtonFiller {
+  padding: 10;
+  width: 107.14;
+}
+.day {
+  font-size: 32;
+  align-self: center;
+  color: #000;
+}
+.eventIndicatorFiller {
+  margin-top: 6;
+  border-color: transparent;
+  width: 8;
+  height: 8;
+  border-radius: 4;
+}
+.eventIndicator {
+  background-color: #ccc;
+}
+.dayCircleFiller {
+  justify-content: center;
+  background-color: transparent;
+  width: 56;
+  height: 56;
+  border-radius: 28;
+}
+.currentDayCircle {
+  background-color: red;
+}
+.currentDayText {
+  color: red;
+}
+.selectedDayCircle {
+  background-color: #2ea2ef;
+}
+.selectedDayText {
+  color: #fff;
+  fontWeight: bold;
+}
+.weekendDayText {
+  color: #f74e00;
+}
+.disabledDayText {
+  color: #ccc
+}
+
